@@ -27,8 +27,6 @@ app.use(cors());
 app.get('/', (req: Request, res: Response) =>
     res.send('Welcome!'));
 
-app.get('/add/:a/:b', (req: Request, res: Response) =>
-    res.send(req.params.a + req.params.b));
 
 // create RESTful Web service API
 const userController = UserController.getInstance(app);
