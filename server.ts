@@ -18,7 +18,8 @@ import mongoose from "mongoose";
 var cors = require('cors')
 
 // build the connection string
-mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/tuiter?retryWrites=true&w=majority')
+// mongoose.connect('mongodb://localhost:27017/tuiter');
 
 const app = express();
 app.use(express.json());
