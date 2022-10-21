@@ -6,5 +6,5 @@ const MessageSchema = new mongoose.Schema<Message>({
     from: {type: Schema.Types.ObjectId, ref: "UserModel"},
     to: {type: Schema.Types.ObjectId, ref: "UserModel"},
     date: {type: Date, default: Date.now},
-}, {collection: "bookmarks"});
+}, {collection: "messages"});
 export default MessageSchema;
