@@ -24,7 +24,7 @@ export default class TuitDao implements TuitDaoI{
         TuitModel.find()
             .populate("postedBy")
             .exec();
-    findAllTuitsByUser = async (uid: string): Promise<Tuit[]> =>
+    findTuitsByUser = async (uid: string): Promise<Tuit[]> =>
         TuitModel.find({postedBy: uid})
             .populate("postedBy")
             .exec();
@@ -40,4 +40,9 @@ export default class TuitDao implements TuitDaoI{
             {$set: tuit});
     deleteTuit = async (uid: string): Promise<any> =>
         TuitModel.deleteOne({_id: uid});
+    updateLikes =
+        async (tid:string, newStats:number) =>
+            TuitModel.updateOne(
+                {_id: tid},
+                {$set: {stats: newStats}});
 }
