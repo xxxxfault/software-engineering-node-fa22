@@ -19,6 +19,7 @@ import MessageController from "./controllers/MessageController";
 import FollowController from "./controllers/FollowController";
 import BookmarkController from "./controllers/BookmarkController";
 import AuthenticationController from "./controllers/auth-controller";
+import DislikeController from "./controllers/DislikeController";
 
 const cors = require('cors');
 const session = require("express-session");
@@ -61,6 +62,7 @@ app.get('/', (req: Request, res: Response) =>
 const userController = UserController.getInstance(app);
 const tuitController = TuitController.getInstance(app);
 const likesController = LikeController.getInstance(app);
+const dislikeController = DislikeController.getInstance(app);
 const messageController = MessageController.getInstance(app);
 const followController = FollowController.getInstance(app);
 const bookmarkController = BookmarkController.getInstance(app);

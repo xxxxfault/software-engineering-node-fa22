@@ -2,7 +2,7 @@
 import DislikeModel from "../mongoose/dislikes/DislikeModel";
 import DislikeDaoI from "../interfaces/DislikeDaoI";
 import Dislike from "../models/dislikes/Dislike";
-import LikeModel from "../mongoose/likes/LikeModel";
+
 
 export default class DislikeDao implements DislikeDaoI {
     private static dislikeDao: DislikeDao | null = null;
