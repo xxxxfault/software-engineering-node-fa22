@@ -18,18 +18,43 @@ import mongoose from "mongoose";
 import MessageController from "./controllers/MessageController";
 import FollowController from "./controllers/FollowController";
 import BookmarkController from "./controllers/BookmarkController";
-var cors = require('cors')
+import AuthenticationController from "./controllers/auth-controller";
+
+const cors = require('cors');
+const session = require("express-session");
 
 // build the connection string
 mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/tuiter?retryWrites=true&w=majority')
 // mongoose.connect('mongodb://localhost:27017/tuiter');
 
 const app = express();
+
+let sess = {
+    secret:  'somevalue',
+    cookie: {
+        secure: false
+    },
+    resave: true,
+    saveUninitialized: true
+}
+
+if (process.env.ENV === 'PRODUCTION') {
+    app.set('trust proxy', 1) // trust first proxy
+    sess.cookie.secure = true // serve secure cookies
+}
+
+app.use(session(sess))
 app.use(express.json());
-app.use(cors());
+
+const corsOptions ={
+    origin: true,
+    credentials: true,
+}
+app.use(cors(corsOptions));
 
 app.get('/', (req: Request, res: Response) =>
     res.send('Welcome!'));
+
 
 
 // create RESTful Web service API
@@ -39,6 +64,7 @@ const likesController = LikeController.getInstance(app);
 const messageController = MessageController.getInstance(app);
 const followController = FollowController.getInstance(app);
 const bookmarkController = BookmarkController.getInstance(app);
+AuthenticationController(app);
 
 /**
  * Start a server listening at port 4000 locally
@@ -46,3 +72,6 @@ const bookmarkController = BookmarkController.getInstance(app);
  */
 const PORT = 4000;
 app.listen(process.env.PORT || PORT);
+
+
+
