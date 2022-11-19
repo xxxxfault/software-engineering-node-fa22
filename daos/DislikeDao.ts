@@ -2,6 +2,7 @@
 import DislikeModel from "../mongoose/dislikes/DislikeModel";
 import DislikeDaoI from "../interfaces/DislikeDaoI";
 import Dislike from "../models/dislikes/Dislike";
+import LikeModel from "../mongoose/likes/LikeModel";
 
 export default class DislikeDao implements DislikeDaoI {
     private static dislikeDao: DislikeDao | null = null;
@@ -32,4 +33,9 @@ export default class DislikeDao implements DislikeDaoI {
         DislikeModel.create({tuit: tid, dislikedBy: uid});
     userUndislikesTuit = async (uid: string, tid: string): Promise<any> =>
         DislikeModel.deleteOne({tuit: tid, dislikedBy: uid});
+
+    findUserDislikesTuit =
+        async (uid:string, tid:string) =>
+            DislikeModel.findOne(
+                {tuit: tid, dislikedBy: uid});
 }
