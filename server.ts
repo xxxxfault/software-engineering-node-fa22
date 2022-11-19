@@ -48,7 +48,7 @@ app.use(session(sess))
 app.use(express.json());
 
 const corsOptions ={
-    origin: '*',
+    origin:true,
     credentials: true,
 }
 app.use(cors(corsOptions));
