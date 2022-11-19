@@ -37,7 +37,7 @@ export default class DislikeController implements DislikeControllerI {
             app.get("/api/users/:uid/dislikes", DislikeController.dislikeController.findAllTuitsDislikedByUser);
             app.post("/api/users/:uid/dislikes/:tid", DislikeController.dislikeController.userDislikesTuit);
             app.delete("/api/users/:uid/undislikes/:tid", DislikeController.dislikeController.userUndislikesTuit);
-            app.put("/api/users/:uid/dislikes/:tid", DislikeController.dislikeController.userTogglesTuitDisikes);
+            app.put("/api/users/:uid/dislikes/:tid", DislikeController.dislikeController.userTogglesTuitDislikes);
         }
         return DislikeController.dislikeController;
     }
@@ -97,7 +97,7 @@ export default class DislikeController implements DislikeControllerI {
      * body formatted as JSON containing the new dislikes that was inserted in the
      * database
      */
-    userTogglesTuitDisikes = async (req:Request, res:Response) => {
+    userTogglesTuitDislikes = async (req:Request, res:Response) => {
         const uid = req.params.uid;
         const tid = req.params.tid;
         // @ts-ignore
