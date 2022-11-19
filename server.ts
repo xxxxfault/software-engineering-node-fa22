@@ -31,7 +31,7 @@ mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/
 const app = express();
 
 let sess = {
-    secret: process.env.SECRET,
+    secret:  'somevalue',
     cookie: {
         secure: false
     },
