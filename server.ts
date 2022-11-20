@@ -31,12 +31,13 @@ mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/
 const app = express();
 
 let sess = {
-    secret:  'somevalue',
-    cookie: {
-        secure: false
-    },
+    secret: process.env.SESSION_SECRET || 'Super Secret (change it)',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: {
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+        secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+    }
 }
 
 if (process.env.ENV === 'PRODUCTION') {
