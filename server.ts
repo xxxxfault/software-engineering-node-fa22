@@ -25,7 +25,9 @@ const cors = require('cors');
 const session = require("express-session");
 
 // build the connection string
-mongoose.connect('mongodb+srv://jiaqian:Xujiaqiano@cluster0.ucuihp7.mongodb.net/tuiter?retryWrites=true&w=majority')
+const url=`mongodb+srv://jiaqian:${process.env.mongodbpw}@cluster0.ucuihp7.mongodb.net/tuiter?retryWrites=true&w=majority`;
+
+mongoose.connect(url)
 // mongoose.connect('mongodb://localhost:27017/tuiter');
 
 const app = express();
@@ -35,12 +37,15 @@ let sess = {
     resave: true,
     saveUninitialized: false,
     cookie: {
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
-        secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+        secure: false,
+        resave: false,
+        saveUninitialized: false,
+        // Enables cross-site delivery between Netlify and Heroku.
+        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
     }
 }
 
-if (process.env.ENV === 'PRODUCTION') {
+if (process.env.ENV === 'production') {
     app.set('trust proxy', 1) // trust first proxy
     sess.cookie.secure = true // serve secure cookies
 }
