@@ -20,9 +20,17 @@ import FollowController from "./controllers/FollowController";
 import BookmarkController from "./controllers/BookmarkController";
 import AuthenticationController from "./controllers/auth-controller";
 import DislikeController from "./controllers/DislikeController";
-
+const app = express();
 const cors = require('cors');
 const session = require("express-session");
+
+
+const corsOptions ={
+    origin:true,
+    credentials: true,
+}
+app.use(cors(corsOptions));
+app.use(express.json());
 
 // build the connection string
 const url=`mongodb+srv://jiaqian:${process.env.mongodbpw}@cluster0.ucuihp7.mongodb.net/tuiter?retryWrites=true&w=majority`;
@@ -30,34 +38,24 @@ const url=`mongodb+srv://jiaqian:${process.env.mongodbpw}@cluster0.ucuihp7.mongo
 mongoose.connect(url)
 // mongoose.connect('mongodb://localhost:27017/tuiter');
 
-const app = express();
+
 
 let sess = {
     secret: process.env.SESSION_SECRET || 'Super Secret (change it)',
     resave: true,
     saveUninitialized: false,
     cookie: {
-        secure: false,
-        resave: false,
-        saveUninitialized: false,
-        // Enables cross-site delivery between Netlify and Heroku.
-        sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax'
+        secure: true,
+        resave: true,
+        sameSite: 'none'
     }
 }
 
-if (process.env.ENV === 'production') {
-    app.set('trust proxy', 1) // trust first proxy
-    sess.cookie.secure = true // serve secure cookies
-}
+app.set('trust proxy', 1) // trust first proxy
+
 
 app.use(session(sess))
-app.use(express.json());
 
-const corsOptions ={
-    origin:true,
-    credentials: true,
-}
-app.use(cors(corsOptions));
 
 app.get('/', (req: Request, res: Response) =>
     res.send('Welcome!'));
